@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">  
+  <modelVersion>4.0.0</modelVersion>  
+
+  <!-- gavp属性 -->
+  <groupId>com.atguigu</groupId>
+  <artifactId>maven-javase-project-01</artifactId>  
+  <!-- 构建过程 - 部署 - 修改 -->
+  <version>1.0-0</version>
+  <!-- Maven工程的打包方式 jar war pom -->
+  <packaging>war</packaging>
+
+  <!-- 声明版本号 -->
+  <properties>
+    <!-- 声明一个变量！在其他的位置可以引用${jackson.version}
+        注意：声明的标签建议两层以上命名 推荐：技术.version
+    -->
+    <jackson.version>2.18.2</jackson.version>
+    <maven.compiler.source>17</maven.compiler.source>
+    <maven.compiler.target>17</maven.compiler.target>  
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
+
+  <!-- 依赖信息声明 -->
+  <dependencies>
+    <dependency>
+      <!-- jackson-databind 包含 jackson-core 和 jackson-annotations -->
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-databind</artifactId>
+      <version>${jackson.version}</version>
+    </dependency>
+<!--    <dependency>-->
+<!--      <groupId>com.fasterxml.jackson.core</groupId>-->
+<!--      <artifactId>jackson-core</artifactId>-->
+<!--      <version>${jackson.version}</version>-->
+<!--      <scope>compile</scope>-->
+<!--      &lt;!&ndash; scope：引入依赖的作用域-->
+<!--            默认：compile  -> main/test  打包和运行-->
+<!--                 test     -> test      junit @Test-->
+<!--                 runtime  -> main不会   test不会  打包和运行-->
+<!--                 provided -> main/test  打包和运行不用-->
+<!--      &ndash;&gt;-->
+<!--    </dependency>-->
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.13.2</version>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+  <!-- 导入插件 -->
+  <build>
+    <plugins>
+      <!-- 插件-->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-war-plugin</artifactId>
+        <version>3.3.1</version> <!-- 或者使用3.2.2版本 -->
+      </plugin>
+    </plugins>
+  </build>
+
+
+</project>
