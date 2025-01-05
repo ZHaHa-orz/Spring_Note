@@ -96,9 +96,6 @@ public class SpringIocTest {
         // TODO: FactoryBean工厂也会加入到ioc容器
         Object bean = applicationContext.getBean("&javaBean");
         System.out.println("bean" + bean);
-
-
-
     }
 
 }
