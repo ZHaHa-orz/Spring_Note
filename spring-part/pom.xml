@@ -14,6 +14,8 @@
         <module>spring-ioc-annotation-03</module>
         <module>spring-ioc-annotation-practice-04</module>
         <module>spring-ioc-java-05</module>
+        <module>spring-ioc-java-practice-06</module>
+        <module>spring-test-annotation-07</module>
     </modules>
 
     <properties>
@@ -56,13 +58,18 @@
             <version>6.0.6</version>
         </dependency>
 
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+            <version>6.0.6</version>
+            <scope>test</scope>
+        </dependency>
+
         <!-- jsr-250注解 Java提供的注解，spring提供了一个 @Resource -->
         <dependency>
             <groupId>jakarta.annotation</groupId>
             <artifactId>jakarta.annotation-api</artifactId>
             <version>3.0.0</version>
         </dependency>
-
-
     </dependencies>
 </project>

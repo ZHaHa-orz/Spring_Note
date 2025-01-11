@@ -5,7 +5,7 @@
 
     <!--
         id -> getObject 方法返回的对象的标识
-            T厂bean的标识   &id信
+            工厂bean的标识 &id
         class -> factoryBean标准化工厂类
     -->
     <bean id="javaBean" class="com.atguigu.ioc_05.JavaBeanFactoryBean">

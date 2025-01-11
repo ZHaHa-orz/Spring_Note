@@ -34,7 +34,6 @@ public class SpringIocTest {
         ClassPathXmlApplicationContext applicationContext1 = new ClassPathXmlApplicationContext();
         applicationContext1.setConfigLocations("spring-03.xml");
         applicationContext1.refresh();  // 调用ioc和di的流程
-
     }
 
     /**
@@ -95,7 +94,6 @@ public class SpringIocTest {
 
         // TODO: FactoryBean工厂也会加入到ioc容器
         Object bean = applicationContext.getBean("&javaBean");
-        System.out.println("bean" + bean);
+        System.out.println("bean = " + bean);
     }
-
 }
