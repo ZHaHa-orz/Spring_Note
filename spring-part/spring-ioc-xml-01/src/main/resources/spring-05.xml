@@ -9,6 +9,6 @@
         class -> factoryBean标准化工厂类
     -->
     <bean id="javaBean" class="com.atguigu.ioc_05.JavaBeanFactoryBean">
-        <property name="value" value="zhh"></property>
+        <property name="value" value="zhh"/>
     </bean>
 </beans>

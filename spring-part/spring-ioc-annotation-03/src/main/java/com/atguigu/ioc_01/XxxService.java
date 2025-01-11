@@ -1,4 +1,4 @@
-package com.atguigu.ioc_1;
+package com.atguigu.ioc_01;
 
 import org.springframework.stereotype.Service;
 

@@ -12,6 +12,8 @@
         <module>spring-ioc-xml-01</module>
         <module>spring-ioc-xml-pratice-02</module>
         <module>spring-ioc-annotation-03</module>
+        <module>spring-ioc-annotation-practice-04</module>
+        <module>spring-ioc-java-05</module>
     </modules>
 
     <properties>
@@ -53,6 +55,14 @@
             <artifactId>spring-jdbc</artifactId>
             <version>6.0.6</version>
         </dependency>
+
+        <!-- jsr-250注解 Java提供的注解，spring提供了一个 @Resource -->
+        <dependency>
+            <groupId>jakarta.annotation</groupId>
+            <artifactId>jakarta.annotation-api</artifactId>
+            <version>3.0.0</version>
+        </dependency>
+
 
     </dependencies>
 </project>
