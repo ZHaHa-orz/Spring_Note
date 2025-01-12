@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/aop https://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <context:component-scan base-package="com.atguigu"/>
+
+    <!-- 支持aspectj的注解配置 -->
+    <!-- 方法一 -->
+    <!-- 或者在配置类加上@EnableAspectJAutoProxy来开启aop -->
+    <aop:aspectj-autoproxy/>
+
+    <!-- 方法二 -->
+    <!-- 使用标签进行aop的配置：切面配置，声明切面，位置指定 -->
+    <aop:config>
+        <!-- 声明切面标签 == @Pointcut -->
+        <aop:pointcut id="pointCut" expression="execution(* com.atguigu.service.impl.*.*(..))"/>
+        <aop:pointcut id="MyPointCut" expression="execution(* com..impl.*.*(..))"/>
+
+        <!-- 切面配置标签 @Aspect - ref = 增强对象 order = 优先级 -->
+        <aop:aspect ref="txAdvice" order="5">
+            <aop:before method="begin" pointcut-ref="pointCut"/>
+            <aop:after-returning method="commit" pointcut-ref="pointCut" returning="result"/>
+            <aop:after-throwing method="rollback" pointcut-ref="pointCut" throwing="t"/>
+        </aop:aspect>
+    </aop:config>
+</beans>
