@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.atguigu.mapper.EmployeeMapper">
+    <!--
+        #{ key }: 占位符 + 赋值  emp_id = ?   ? = 赋值
+        ${ key }: 字符串拼接     "emp_id = " + id
+        动态值: 推荐使用 #{key} 防止注入攻击的问题
+        动态的列名、容器名、关键字 推荐使用 ${key}
+     -->
+    <select id="queryById" resultType="com.atguigu.pojo.Employee">
+        select emp_id empId,emp_name empName, emp_salary empSalary
+            from t_emp where emp_id =
+        <!-- ${id} -->
+        #{id}
+    </select>
+
+    <!--
+     场景1: 传入的单个简单类型 key 随便写 一般情况下推荐使用参数名
+     -->
+    <delete id="deleteById">
+        delete from t_emp where emp_id = #{id}
+    </delete>
+    
+    <select id="queryBySalary" resultType="com.atguigu.pojo.Employee">
+        select emp_id empId,emp_name empName, emp_salary empSalary
+            from t_emp where emp_salary > #{salary}
+    </select>
+
+    <!--
+        场景2: 传入的是一个实体对象
+            key = 属性名
+     -->
+    <insert id="insertEmp">
+        insert into t_emp(emp_name,emp_salary)
+        values (#{empName},#{empSalary})
+    </insert>
+
+    <!-- 场景3: 传入多个简单类型数据
+        方案1: 注解指定 @Param("key") [ 推荐 ]
+        方案2: mybatis默认机制
+                arg0 arg1 arg2 ...形参从左到右一次对应
+                (name, salary) name -> key = arg0   |   salary -> key = arg1
+                param1 param2 param3 ...形参从左到右一次对应
+                (name, salary) name -> key = param1   |   salary -> key = param2
+     -->
+    <select id="queryByNameAndSalary" resultType="com.atguigu.pojo.Employee">
+        select emp_id empId,emp_name empName, emp_salary empSalary from t_emp where
+            emp_name = #{name} and emp_salary > #{salary}
+            <!-- emp_name = #{arg0} and emp_salary > #{arg1} -->
+            <!-- emp_name = #{param1} and emp_salary > #{param2} -->
+    </select>
+
+    <!-- 场景4: 传入map
+        key = map的key
+     -->
+    <insert id="insertEmpMap">
+        insert into t_emp(emp_name,emp_salary)
+        values (#{name},#{salary})
+    </insert>
+
+</mapper>

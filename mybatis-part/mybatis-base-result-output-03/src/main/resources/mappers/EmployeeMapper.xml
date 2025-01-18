@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.atguigu.mapper.EmployeeMapper">
+    <!-- DML -->
+    <delete id="deleteById">
+        delete from t_emp where emp_id = #{id}
+    </delete>
+
+    <!-- 场景1: 返回单个简单类型
+            resultType 语法:
+                1.类的全限定符号
+                2.别名简称
+                    mybatis 提供了72种默认别名
+                        基本数据类型 int double -> _int _double
+                        包装数据类型 Integer Double -> int integer double
+                        集合容器类型 Map List HashMap -> 小写: map list hashmap
+                3.自定义别名 typeAliases
+                    <typeAliases>
+                        <typeAlias type="com.atguigu.pojo.Employee" alias="zhaha" />
+                    </typeAliases>
+                    批量设置:
+                     <typeAliases>
+                        // 批量将包下的类给予别名, 别名默认就是类的首字母小写 在类上加上 @Alias("别名")
+                        <package name="com.atguigu.pojo" />
+                    </typeAliases>
+
+     -->
+    <select id="queryById" resultType="com.atguigu.pojo.Employee"> <!-- 或 zhaha --> <!-- 或 employee -->
+        select emp_id empId,emp_name empName, emp_salary empSalary
+            from t_emp where emp_id = #{id}
+    </select>
+    <select id="queryNameById" resultType="java.lang.String"> <!-- 或 string -->
+        select emp_name from t_emp where emp_id = #{id}
+    </select>
+    <select id="querySalaryById" resultType="java.lang.Double"> <!-- 或 _double -->
+        select emp_salary from t_emp where emp_id = #{id}
+    </select>
+
+    <!-- 场景2: 返回没法封装到实体类对象中的多个值 resultType="map" -->
+    <select id="selectEmpNameAndMaxSalary" resultType="map">
+        select emp_name 员工姓名, emp_salary 员工工资,
+        (select AVG(emp_salary) from t_emp) 部门平均工资
+        from t_emp where emp_salary = (
+        select MAX(emp_salary) from t_emp)
+    </select>
+    <!-- 场景3: 返回集合类型 resultType="泛型" -->
+    <select id="queryNameBySalary" resultType="string">
+        select emp_name from t_emp where emp_salary > #{salary}
+    </select>
+    <select id="queryAll" resultType="com.atguigu.pojo.Employee">
+        select * from t_emp
+    </select>
+    <!-- 场景4: 插入数据
+            int insertEmp(Employee employee);
+        自增长主键:
+            useGeneratedKeys: 属性字面意思就是“使用生成的主键”
+            keyColumn: 指定主键在数据库表中的字段名
+            keyProperty: 指定主键在实体类对象中对应的属性名
+        非自增长主键:
+            <insert>
+                <selectKey order="af" returnType="string" keyProperty="empId">
+                    select REPLACE(UUID(),'-','')
+                </selectKey>
+                insert into t_emp(emp_id,emp_name,emp_salary)
+            </insert>
+     -->
+    <insert id="insertEmp" useGeneratedKeys="true" keyColumn="emp_id" keyProperty="empId">
+        insert into t_emp(emp_name,emp_salary)
+        values (#{empName},#{empSalary})
+    </insert>
+
+    <!-- 场景5: 专门声明一个resultMap设定column到property之间的对应关系 -->
+    <resultMap id="selectEmployeeByRMResultMap" type="com.atguigu.mybatis.entity.Employee">
+        <!-- 使用id标签设置主键列和主键属性之间的对应关系 -->
+        <!-- column属性用于指定字段名；property属性用于指定Java实体类属性名 -->
+        <id column="emp_id" property="empId"/>
+
+        <!-- 使用result标签设置普通字段和Java实体类属性之间的关系 -->
+        <result column="emp_name" property="empName"/>
+        <result column="emp_salary" property="empSalary"/>
+    </resultMap>
+
+    <!-- Employee selectEmployeeByRM(Integer empId); -->
+    <select id="selectEmployeeByRM" resultMap="selectEmployeeByRMResultMap">
+        select emp_id,emp_name,emp_salary from t_emp where emp_id=#{empId}
+    </select>
+
+</mapper>
