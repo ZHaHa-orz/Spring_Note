@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace = 接口的全限定符 -->
+<mapper namespace="com.atguigu.mapper.EmployeeMapper">
+    <!-- sql语句提取 -->
+    <sql id="selectSql">
+        select * from t_emp
+    </sql>
+
+    <!-- 1.if where set -->
+    <!-- List<Employee> query(@Param("name")String name, @Param("salary")Double salary); -->
+    <!-- 如果传入属性,就判断相等, 如果不传入,不加对应的条件
+            where
+            <if> 判断传入的参数,最终是否添加语句
+                test属性: 内部做比较运算, true 将标签内的sql语句进行拼接
+                                       false 不拼接标签内部语句
+                    判断语句: "key [比较符号] [值] [and | or] key [比较符号] [值] ..."
+                        比较符号: 大于和小于 不推荐直接写符号  [> 用 &gt;] [< 用 &lt;]
+            <where> 包含在if标签外
+                1.自动添加哪里关键字哪里内部有任何一个如果满足，自动添加哪里关键字，不满足去掉哪里
+                2.自动去掉多余的 and 和 or 关键字
+    -->
+    <select id="query" resultType="employee">
+        <include refid="selectSql"/> <!-- 相当于 select * from t_emp -->
+            <where> <!-- 或 where 1=1 -->
+                <if test="name != null and name != ''">
+                    and emp_name = #{name}
+                </if>
+                <if test="salary != null">
+                    and emp_salary > #{salary}
+                </if>
+            </where>
+    </select>
+    <!-- int update(Employee employee); -->
+    <!-- set: 1.自动去掉多余的逗号","
+              2.自动添加set关键字
+     -->
+    <update id="update">
+        update t_emp
+            <set>
+                <if test="empName != null and empName != ''">
+                    emp_name = #{empName},
+                </if>
+                <if test="empSalary != null">
+                    emp_salary = #{empSalary}
+                </if>
+            </set>
+        where emp_id = #{empId}
+    </update>
+
+    <!-- 2.trim -->
+    <!-- List<Employee> queryTrim(@Param("name")String name, @Param("salary")Double salary); -->
+    <!-- trim: 控制条件部分两端是否包含某些字符
+            prefix属性：指定要动态添加的前缀
+            suffix属性：指定要动态添加的后缀
+            prefixOverrides属性：指定要动态去掉的前缀，使用"|"分隔有可能的多个值
+            suffixOverrides属性：指定要动态去掉的后缀，使用"|"分隔有可能的多个值
+     -->
+    <select id="queryTrim" resultType="employee">
+        <include refid="selectSql"/>
+        <trim prefix="where" suffixOverrides="and|or">
+            <if test="name != null and name != ''">
+                and emp_name = #{name}
+            </if>
+            <if test="salary != null">
+                and emp_salary > #{salary}
+            </if>
+        </trim>
+    </select>
+    <!-- int updateTrim(Employee employee); -->
+    <update id="update">
+        update t_emp
+        <trim prefix="set" suffixOverrides=",">
+            <if test="empName != null and empName != ''">
+                emp_name = #{empName},
+            </if>
+            <if test="empSalary != null">
+                emp_salary = #{empSalary}
+            </if>
+        </trim>
+        where emp_id = #{empId}
+    </update>
+
+    <!-- 3.choose when otherwise -->
+    <!-- //根据两个条件查询，如果姓名不为nu11使用姓名查询，如果姓名为nu11,薪水不为空就使用薪水查询! 都为nu11查询全部 -->
+    <!-- List<Employee> queryChoose(@Param("name")String name, @Param("salary")Double salary); -->
+    <select id="queryTrim" resultType="employee">
+        <include refid="selectSql"/>
+        where
+        <choose>
+            <when test="name != null and name != ''">
+                and emp_name = #{name}
+            </when>
+            <when test="salary != null">
+                and emp_salary > #{salary}
+            </when>
+            <otherwise> 1=1 </otherwise>
+        </choose>
+    </select>
+
+    <!-- 4. foreach -->
+    <!-- jdbc:mysql://localhost:3306/mybatis-example?allowMultiQueries=true -->
+    <!-- 遍历的数据
+            (1, 2, 3)
+            collection=“ids | arg0 | list”
+            item 表示遍历的每一个元素
+            open 遍历之前要追加的字符串 (
+            close 遍历之后要追加的字符串 )
+            separator 遍历过程中,每个元素之间要追加的字符串 ,
+    -->
+    <!-- // 根据id批量查询 -->
+    <!-- List<Employee> queryBatch(@Param("ids") List<Integer> ids); -->
+    <select id="queryBatch" resultType="employee">
+        <include refid="selectSql"/>
+            where emp_id in
+            <foreach collection="ids" item="id" open="(" close=")" separator=",">
+                #{id}
+            </foreach>
+    </select>
+
+    <!-- // 根据id批量删除 -->
+    <!-- int deleteBatch(@Param("ids") List<Integer> ids); -->
+    <delete id="deleteBatch">
+        delete from t_emp
+            where emp_id in
+            <foreach collection="ids" item="id" open="(" close=")" separator=",">
+                #{id}
+            </foreach>
+    </delete>
+
+    <!-- // 根据id批量插入 -->
+    <!-- int insertBatch(@Param("employeeList") List<Employee> employeeList); -->
+    <insert id="insertBatch">
+        insert into t_emp (emp_name, emp_salary)
+            values
+            <foreach collection="employeeList" item="employee" separator=",">
+                (#{employee.empName}, #{employee.empSalary})
+            </foreach>
+    </insert>
+
+    <!-- // 根据id批量修改 -->
+    <!-- int updateBatch(@Param("employeeList") List<Employee> employeeList); -->
+    <update id="updateEmployeeBatch">
+        <foreach collection="employeeList" item="emp" separator=";">
+            update t_emp set emp_name=#{emp.empName}, emp_salary=#{emp.empSalary}
+                where emp_id=#{emp.empId}
+        </foreach>
+    </update>
+</mapper>
