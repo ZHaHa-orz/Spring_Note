@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <settings>
+        <!-- 日志 -->
+        <setting name="logImpl" value="STDOUT_LOGGING"/>
+        <!-- 驼峰式自动映射 -->
+        <setting name="mapUnderscoreToCamelCase" value="true"/>
+        <!-- resultMap标签 自动嵌套映射 不管有没有嵌套都会自动映射result标签的属性和列 -->
+        <setting name="autoMappingBehavior" value="FULL"/>
+    </settings>
+
+    <typeAliases>
+        <package name="com.atguigu.pojo"/>
+    </typeAliases>
+
+    <environments default="development">
+        <environment id="development">
+            <transactionManager type="JDBC"/>
+            <dataSource type="POOLED">
+                <property name="driver" value="com.mysql.cj.jdbc.Driver"/>
+                <property name="url" value="jdbc:mysql://localhost:3306/mybatis-example?allowMultiQueries=true"/>
+                <property name="username" value="root"/>
+                <property name="password" value="123456"/>
+            </dataSource>
+        </environment>
+    </environments>
+    <mappers>
+        <!-- <mapper resource="mappers/EmployeeMapper.xml"/> -->
+
+        <!-- 批量mapper指定
+                1.要求xml文件和mapper接口的命名必须相同
+                2.最终打包后的位置要一致 都是指定的包地址下com.atguigu.mapper
+                    方案1: xml文件也加入到接口所在的包 需要在pom写build配置 [不推荐]
+                    方案2: resource文件创建对应的文件夹结构
+         -->
+        <package name="com.atguigu.mapper"/>
+    </mappers>
+</configuration>
