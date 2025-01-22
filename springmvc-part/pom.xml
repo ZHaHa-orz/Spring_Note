@@ -13,6 +13,7 @@
         <module>springmvc02-base-input</module>
         <module>springmvc03-base-output</module>
         <module>springmvc04-base-restful</module>
+        <module>springmvc05-high-other</module>
     </modules>
 
     <properties>
@@ -74,6 +75,20 @@
             <groupId>jakarta.servlet.jsp.jstl</groupId>
             <artifactId>jakarta.servlet.jsp.jstl-api</artifactId>
             <version>3.0.0</version>
+        </dependency>
+
+        <!-- 校验注解实现-->
+        <!-- https://mvnrepository.com/artifact/org.hibernate.validator/hibernate-validator -->
+        <dependency>
+            <groupId>org.hibernate.validator</groupId>
+            <artifactId>hibernate-validator</artifactId>
+            <version>8.0.0.Final</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.hibernate.validator/hibernate-validator-annotation-processor -->
+        <dependency>
+            <groupId>org.hibernate.validator</groupId>
+            <artifactId>hibernate-validator-annotation-processor</artifactId>
+            <version>8.0.0.Final</version>
         </dependency>
     </dependencies>
 
