@@ -1,0 +1,34 @@
+# yaml有层次,可以继承的配置文件格式
+# key:
+#   key1: value1
+
+# server.port=8080
+# server.servlet.context-path=/boot
+server:
+  port: 8080
+  servlet:
+    context-path: /boot
+
+# zwf.info.name=zhh
+# zwf.info.age=18
+# zwf.root.username=root
+# zwf.root.password=123456
+# zwf.info.skill[0]=java
+# zwf.info.skill[1]=spring
+# zwf.info.skill[2]=springboot
+zwf:
+  info:
+    name: zhh
+    age: 18
+    username: root  # 如果激活dev配置，则会覆盖username的值 -> rootdev
+    # password: 123456
+    skill:
+      - java
+      - spring
+      - springboot
+
+spring:
+  profiles:
+    active: test,dev # 激活外部的配置 application-dev.yaml | application-test.yaml
+                     # 外部配置的key 和 application-key重复 外部的key覆盖内部的
+                     # ,命令行参数(动态激活): jar --active=test

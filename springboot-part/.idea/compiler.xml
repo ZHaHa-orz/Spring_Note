@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" />
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="springboot01-base-quick" />
+        <module name="springboot03-base-druid" />
+        <module name="springboot04-base-mybatis" />
+        <module name="springboot02-base-springmvc" />
+      </profile>
+    </annotationProcessing>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="springboot01-base-quick" options="-parameters" />
+      <module name="springboot02-base-springmvc" options="-parameters" />
+      <module name="springboot03-base-druid" options="-parameters" />
+      <module name="springboot04-base-mybatis" options="-parameters" />
+    </option>
+  </component>
+</project>

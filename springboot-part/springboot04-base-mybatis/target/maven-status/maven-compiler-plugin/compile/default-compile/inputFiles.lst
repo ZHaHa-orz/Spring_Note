@@ -1,0 +1,6 @@
+D:\code\Note-Java\spring\springboot-part\springboot04-base-mybatis\src\main\java\com\atguigu\Main.java
+D:\code\Note-Java\spring\springboot-part\springboot04-base-mybatis\src\main\java\com\atguigu\pojo\User.java
+D:\code\Note-Java\spring\springboot-part\springboot04-base-mybatis\src\main\java\com\atguigu\controller\UserController.java
+D:\code\Note-Java\spring\springboot-part\springboot04-base-mybatis\src\main\java\com\atguigu\advice\LogAdvice.java
+D:\code\Note-Java\spring\springboot-part\springboot04-base-mybatis\src\main\java\com\atguigu\mapper\UserMapper.java
+D:\code\Note-Java\spring\springboot-part\springboot04-base-mybatis\src\main\java\com\atguigu\service\UserService.java
