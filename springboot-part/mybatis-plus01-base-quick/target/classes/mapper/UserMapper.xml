@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace = 接口的全限定符 -->
+<mapper namespace="com.atguigu.mapper.UserMapper">
+    <!-- IPage<User> queryByAge(IPage<User> page, @Param("age") Integer age); -->
+    <!-- 方法, 写的就是查询集合泛型, page 的泛型 -->
+    <select id="queryByAge" resultType="user">
+        select * from t_user where age > #{age}
+    </select>
+</mapper>

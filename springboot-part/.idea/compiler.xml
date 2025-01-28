@@ -11,11 +11,13 @@
         <module name="springboot03-base-druid" />
         <module name="springboot04-base-mybatis" />
         <module name="springboot02-base-springmvc" />
+        <module name="mybatis-plus01-base-quick" />
       </profile>
     </annotationProcessing>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="mybatis-plus01-base-quick" options="-parameters" />
       <module name="springboot01-base-quick" options="-parameters" />
       <module name="springboot02-base-springmvc" options="-parameters" />
       <module name="springboot03-base-druid" options="-parameters" />

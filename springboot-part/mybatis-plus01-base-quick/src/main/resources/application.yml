@@ -1,0 +1,23 @@
+spring:
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    url: jdbc:mysql:///mybatis-example
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.cj.jdbc.Driver
+mybatis-plus:
+  # 默认mapper.xml文件 指定的位置 mapper 文件夹
+  # mapper-locations: classpath*:mapper/*.xml
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl # 控制台输出sql语句
+    map-underscore-to-camel-case: true  # 驼峰式 默认为true
+  type-aliases-package: com.atguigu.pojo
+  global-config:
+    db-config:
+      # 表名前缀 实体类：User  表名：t_user 不需要再每个实体类上添加注解
+      table-prefix: t_
+      # 配置主键生成策略
+      id-type: auto
+      # logic-delete-field: delete  # 逻辑删除属性
+      logic-not-delete-value: 0 # 未删除 默认值0
+      logic-delete-value: 1 # 已删除 默认值1
